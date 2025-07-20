@@ -1,15 +1,15 @@
 import 'package:synchronized_tracked_time_list/src/call.dart';
 
-import '../claude/synchronized_tracked_set_claude.dart';
+import 'package:synchronized_tracked_time_list/src/synchronized_tracked_set.dart';
 
 void main() async {
-  final timedSet = UserTimedSet(
+  final timedSet = SynchronizedTimedSet(
     cleanupInterval: Duration(milliseconds: 0),
     maxBatchSize: 1,
   );
 
   // Listen to change events
-  timedSet.changeStream.listen((event) {
+  timedSet.events.listen((event) {
     print('EVENT: $event');
   });
 
@@ -105,51 +105,44 @@ void main() async {
   print(
     '\n=== Adding same user data (no changes) - should NOT trigger MODIFIED ===',
   );
-  timedSet.synchronize({
+  timedSet.synchronizeBatch([
     Call(
       callerID: '1',
       direction: TelavoxDirection.outgoing,
       status: TelavoxLineStatus.connected,
-    ): Duration(
-      milliseconds: 599,
     ), // Exactly same
     Call(
       callerID: '2',
       direction: TelavoxDirection.outgoing,
       status: TelavoxLineStatus.connected,
-    ): Duration(
-      milliseconds: 599,
     ), // New user
-  });
+  ], Duration(milliseconds: 15000));
   print(timedSet);
 
   await Future.delayed(Duration(milliseconds: 300));
   print('\n=== After 300ms - checking final state ===');
   print(timedSet);
-
+  print('Set size: ${timedSet.length}');
+  print('initiating empty poll');
+  timedSet.synchronize({});
+  print(timedSet.isEmpty ? 'Successfull result' : 'Bad result');
   // Example with simple strings to show the difference
   print('\n\n=== Example with simple strings ===');
   final stringSet = SynchronizedTimedSet<String>();
 
-  stringSet.changeStream.listen((event) {
+  stringSet.events.listen((event) {
     print('STRING EVENT: $event');
   });
 
-  stringSet.synchronizeWithLifetime([
-    'hello',
-    'world',
-  ], Duration(milliseconds: 300));
+  stringSet.synchronizeBatch(['hello', 'world'], Duration(milliseconds: 300));
   await Future.delayed(Duration(milliseconds: 50));
 
   // Same strings - no modification events
-  stringSet.synchronizeWithLifetime([
-    'hello',
-    'world',
-  ], Duration(milliseconds: 300));
+  stringSet.synchronizeBatch(['hello', 'world'], Duration(milliseconds: 300));
   await Future.delayed(Duration(milliseconds: 50));
 
   // Different strings - should show modifications
-  stringSet.synchronizeWithLifetime([
+  stringSet.synchronizeBatch([
     'hello',
     'universe',
   ], Duration(milliseconds: 300));
