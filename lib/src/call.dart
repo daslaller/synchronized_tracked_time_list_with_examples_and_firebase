@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:crypto/crypto.dart';
 
 enum TelavoxLineStatus {
@@ -29,7 +30,7 @@ class Call {
   TelavoxLineStatus status;
   List<String> tags = [];
   Call({required this.callerID, required this.direction, required this.status})
-    : uniqueIdentfier = md5.convert(callerID.codeUnits).toString();
+      : uniqueIdentfier = md5.convert(utf8.encode(callerID)).toString();
 
   factory Call.fromJSONcallData(data) {
     return Call(
@@ -38,6 +39,18 @@ class Call {
       status: TelavoxLineStatus.fromString(data['status']),
     );
   }
+
+  /// Converts the Call object to a Map for Firestore.
+  Map<String, dynamic> toJson() {
+    return {
+      'callerID': callerID,
+      'uniqueIdentfier': uniqueIdentfier,
+      'direction': direction.label,
+      'status': status.label,
+      'tags': tags,
+    };
+  }
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
@@ -58,8 +71,8 @@ class Call {
   }
 
   @override
-  int get hashCode => Object.hash(callerID, uniqueIdentfier, direction, status);
+  int get hashCode => Object.hash(callerID, uniqueIdentfier, direction, status, tags);
 
   @override
-  String toString() => 'Call($callerID, $uniqueIdentfier, $direction, $status)';
+  String toString() => 'Call(id: $uniqueIdentfier, caller: $callerID, status: ${status.label})';
 }
