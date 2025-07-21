@@ -6,29 +6,29 @@ import 'package:firebase_core_dart/firebase_core_dart.dart';
 class ServiceAccount {
   FirebaseOptions get _options => FirebaseOptions.fromMap(toJson());
 
-  final String type,
-      projectId,
-      privateKeyId,
-      privateKey,
-      clientEmail,
-      clientId,
-      authUri,
-      tokenUri,
-      authProviderx509CertUrl,
-      clientx509CertUrl,
-      universeDomain;
+  final String type;
+  final String projectId;
+  final String privateKeyId;
+  final String privateKey;
+  final String clientEmail;
+  final String clientId;
+  final String authUri;
+  final String tokenUri;
+  final String authProviderx509CertUrl;
+  final String clientx509CertUrl;
+  final String universeDomain;
   ServiceAccount({
-    required this.type,
-    required this.projectId,
-    required this.privateKeyId,
-    required this.privateKey,
-    required this.clientEmail,
-    required this.clientId,
-    required this.authUri,
-    required this.tokenUri,
-    required this.authProviderx509CertUrl,
-    required this.clientx509CertUrl,
-    required this.universeDomain,
+    this.type = '',
+    this.projectId = '',
+    this.privateKeyId = '',
+    this.privateKey = '',
+    this.clientEmail = '',
+    this.clientId = '',
+    this.authUri = '',
+    this.tokenUri = '',
+    this.authProviderx509CertUrl = '',
+    this.clientx509CertUrl = '',
+    this.universeDomain = '',
   });
   factory ServiceAccount.fromFile({required File accountFile}) {
     if (!accountFile.existsSync()) {

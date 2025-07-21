@@ -8,8 +8,7 @@ import 'package:synchronized_tracked_time_list/src/firestore_service.dart';
 Future<void> main() async {
   // --- FIREBASE INITIALIZATION ---
   // Initialize the app using the generated options file.
-
-  File('example/mgr-telavox-server-firebase-adminsdk-fbsvc-d14433a337.json');
+  print('Hello');
   final admin = FirebaseAdminApp.initializeApp(
     'mgr-telavox-server',
     // Log-in using the newly downloaded file.
@@ -73,4 +72,5 @@ Future<void> main() async {
   callSet.dispose();
   syncService.dispose();
   print('\n=== Simulation Complete ===');
+  await admin.close();
 }
