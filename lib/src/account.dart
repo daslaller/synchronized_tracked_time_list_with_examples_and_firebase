@@ -4,7 +4,8 @@ import 'dart:io';
 import 'package:firebase_core_dart/firebase_core_dart.dart';
 
 class ServiceAccount {
-  FirebaseOptions get options => FirebaseOptions.fromMap(toJson());
+  FirebaseOptions get _options => FirebaseOptions.fromMap(toJson());
+
   final String type,
       projectId,
       privateKeyId,
@@ -67,6 +68,6 @@ class ServiceAccount {
     };
   }
 
-  Future<FirebaseApp> initFire() async =>
-      await Firebase.initializeApp(options: options);
+  Future<FirebaseApp> initiateFirestore() async =>
+      await Firebase.initializeApp(options: _options);
 }
