@@ -1,7 +1,8 @@
 /// Attention!!! Realtime examples cant work without the cloud_firestore in packages 
 /// and having the sdk for flutter installed. Therefore the example is commented out.
-/* import 'dart:async';
-import 'package:dart_firebase_admin/firestore.dart';
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RealtimeClientListener {
   final CollectionReference _collection;
@@ -44,4 +45,4 @@ class RealtimeClientListener {
     _subscription?.cancel();
     print("Client listener stopped.");
   }
-} */
+}
