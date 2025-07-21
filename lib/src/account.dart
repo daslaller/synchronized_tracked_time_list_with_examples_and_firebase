@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:firebase_core_dart/firebase_core_dart.dart';
+
 class ServiceAccount {
+  FirebaseOptions get options => FirebaseOptions.fromMap(toJson());
   final String type,
       projectId,
       privateKeyId,
@@ -26,7 +29,7 @@ class ServiceAccount {
     required this.clientx509CertUrl,
     required this.universeDomain,
   });
-  factory ServiceAccount.fromJsonFile({required File accountFile}) {
+  factory ServiceAccount.fromFile({required File accountFile}) {
     if (!accountFile.existsSync()) {
       print(
         'Could not find service-account.json. Please download it from Firebase.',
@@ -35,20 +38,20 @@ class ServiceAccount {
     }
     final json = jsonDecode(accountFile.readAsStringSync());
     return ServiceAccount(
-      type: json['type']??'',
-      projectId: json['project_id']??'',
-      privateKeyId: json['private_key_id']??'',
-      privateKey: json['private_key']??'',
-      clientEmail: json['client_email']??'',
-      clientId: json['client_id']??'',
-      authUri: json['auth_uri']??'',
-      tokenUri: json['token_uri']??'',
-      authProviderx509CertUrl: json['auth_provider_x509_cert_url']??'',
-      clientx509CertUrl: json['client_x509_cert_url']??'',
-      universeDomain: json['universe_domain']??'',
+      type: json['type'] ?? '',
+      projectId: json['project_id'] ?? '',
+      privateKeyId: json['private_key_id'] ?? '',
+      privateKey: json['private_key'] ?? '',
+      clientEmail: json['client_email'] ?? '',
+      clientId: json['client_id'] ?? '',
+      authUri: json['auth_uri'] ?? '',
+      tokenUri: json['token_uri'] ?? '',
+      authProviderx509CertUrl: json['auth_provider_x509_cert_url'] ?? '',
+      clientx509CertUrl: json['client_x509_cert_url'] ?? '',
+      universeDomain: json['universe_domain'] ?? '',
     );
   }
- Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson() {
     return {
       'type': type,
       'project_id': projectId,
@@ -63,4 +66,7 @@ class ServiceAccount {
       'universe_domain': universeDomain,
     };
   }
+
+  Future<FirebaseApp> initFire() async =>
+      await Firebase.initializeApp(options: options);
 }
