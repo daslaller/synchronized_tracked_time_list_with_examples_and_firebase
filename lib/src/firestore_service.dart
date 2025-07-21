@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:firedart/firedart.dart';
 import 'package:synchronized_tracked_time_list/export_synchronized_tracked_set.dart';
 
 class FiredartSyncService<T> {
