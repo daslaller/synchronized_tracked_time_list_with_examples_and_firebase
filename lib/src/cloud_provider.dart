@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:firebase_core_dart/firebase_core_dart.dart';
 
-class ServiceAccount {
+class FirebaseFirestoreProvider {
   FirebaseOptions get _options => FirebaseOptions.fromMap(toJson());
 
   final String type;
@@ -17,7 +17,7 @@ class ServiceAccount {
   final String authProviderx509CertUrl;
   final String clientx509CertUrl;
   final String universeDomain;
-  ServiceAccount({
+  FirebaseFirestoreProvider({
     this.type = '',
     this.projectId = '',
     this.privateKeyId = '',
@@ -30,7 +30,7 @@ class ServiceAccount {
     this.clientx509CertUrl = '',
     this.universeDomain = '',
   });
-  factory ServiceAccount.fromFile({required File accountFile}) {
+  factory FirebaseFirestoreProvider.fromFile({required File accountFile}) {
     if (!accountFile.existsSync()) {
       print(
         'Could not find service-account.json. Please download it from Firebase.',
@@ -38,7 +38,7 @@ class ServiceAccount {
       exit(1);
     }
     final json = jsonDecode(accountFile.readAsStringSync());
-    return ServiceAccount(
+    return FirebaseFirestoreProvider(
       type: json['type'] ?? '',
       projectId: json['project_id'] ?? '',
       privateKeyId: json['private_key_id'] ?? '',
@@ -70,4 +70,12 @@ class ServiceAccount {
 
   Future<FirebaseApp> initiateFirestore() async =>
       await Firebase.initializeApp(options: _options);
+}
+class AppWriteProvider{
+  AppWriteProvider(){
+    throw Exception('AppWriteProvider not implemented');
+  }
+}
+class SupabaseProvider{
+  SupabaseProvider(){throw Exception('SupabaseProvider not implemented');}
 }
