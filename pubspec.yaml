@@ -10,9 +10,9 @@ environment:
 dependencies:
   uuid: ^4.5.1
   crypto: ^3.0.6
-  firebase_core_dart:  
-  dart_firebase_admin:
+  firebase_core_dart:
   cloud_firestore: ^5.6.12
+  dart_appwrite: ^16.1.0
   # path: ^1.8.0
 
 dev_dependencies:

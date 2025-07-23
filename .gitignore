@@ -7,3 +7,4 @@
 pubspec.lock
 example/service-account.json
 example/mgr-telavox-server-firebase-adminsdk-fbsvc-d14433a337.json
+example/example.dart
