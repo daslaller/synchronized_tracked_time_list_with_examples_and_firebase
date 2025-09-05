@@ -1,8 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-
-import 'package:synchronized_tracked_time_list/src/call.dart';
-
 enum ChangeType { added, removed, modified, expired }
 
 class TimedEntry<T> {
@@ -283,7 +280,6 @@ class SynchronizedTimedSet<T> {
     // This is a simple default that works for many cases
     if (item is Map) return item['id'] ?? item.toString();
     if (item.toString().contains('Instance of')) return item.hashCode;
-    if (item is Call) return item.uniqueIdentfier;
     return item.toString();
   }
 

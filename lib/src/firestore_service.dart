@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:dart_firebase_admin/firestore.dart';
-import 'package:synchronized_tracked_time_list/export_synchronized_tracked_set.dart'; // The file with SynchronizedTimedSet
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:synchronized_tracked_time_list/synchronized_tracked_time_list.dart'; // The file with SynchronizedTimedSet
 class FirebaseSyncService<T> {
   final SynchronizedTimedSet<T> _timedSet;
   final CollectionReference _collection;
